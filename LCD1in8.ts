@@ -147,7 +147,7 @@ namespace LCD1IN8 {
         }
     }
 
-#if 0
+/*
     //% blockId=DrawRectangle
     //% blockGap=8
     //% block="Draw Rectangle|Xstart2 %Xstart2|Ystart2 %Ystart2|Xend2 %Xend2|Yend2 %Yend2|Color %Color|Filled %Filled |Line width %Dot_Pixel"
@@ -231,7 +231,7 @@ namespace LCD1IN8 {
             }
         }
     }
-#endif
+*/
 
     //% shim=LCD1IN8::DisChar_1207
     function DisChar_1207(Xchar: number, Ychar: number, Char_Offset: number, Color: number): void{
