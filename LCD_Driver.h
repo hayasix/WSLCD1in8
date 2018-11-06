@@ -14,13 +14,16 @@
 #ifndef __LCD_DRIVER_H
 #define __LCD_DRIVER_H
 
-//data
+// data
 #define UBYTE   unsigned char
 #define UWORD   unsigned int
 
-//Define the full screen height length of the display
-#define LCD_WIDTH  160  //LCD width
-#define LCD_HEIGHT  128 //LCD height
+// Define the full screen height length of the display
+#define LCD_WIDTH  160  // LCD width
+#define LCD_HEIGHT 128  // LCD height
+#define LCD_CHAR_WIDTH 8
+#define LCD_CHAR_HEIGHT 8
+#define LCD_CHAR_WIDTH_BYTES ((int)(LCD_CHAR_WIDTH / 8))
 
 enum LCD_COLOR {
     WHITE = 0xFFFF,
@@ -39,7 +42,7 @@ enum LCD_COLOR {
     GRAY = 0X8430
 };
 
-enum DOT_PIXEL{
+enum DOT_PIXEL {
     DOT_PIXEL_1 = 1,
     DOT_PIXEL_2,
     DOT_PIXEL_3,
@@ -56,22 +59,23 @@ enum DRAW_FILL {
     DRAW_FULL,
 };
 
-class LCD_Driver{
-private:
+class LCD_Driver {
+  private:
     void LCD_SPI_Init(void);
     void LCD_Reset(void);
     void LCD_InitReg(void);
 
     void LCD_WriteReg(UBYTE Reg);
     void LCD_WriteData_8Bit(UBYTE Data);
-    void LCD_WriteData_Buf(UWORD Buf,unsigned long Len);
+    void LCD_WriteData_Buf(UWORD Buf, unsigned long Len);
 
     void LCD_SetWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend);
     void LCD_SetCursor(UWORD X, UWORD Y);
-    void LCD_SetColor(UWORD Color ,UWORD Xnum, UWORD Ynum);
+    void LCD_SetColor(UWORD Color, UWORD Xnum, UWORD Ynum);
 
     void LCD_SetPoint(UWORD Xpoint, UWORD Ypoint, UWORD Color);
-public:
+
+  public:
     void LCD_Init(void);
 
     void LCD_SetBL(int Lev);
@@ -83,11 +87,11 @@ public:
     void LCD_DisplayWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend);
 
     void LCD_DrawPoint(int Xpoint, int Ypoint, DOT_PIXEL Dot_Pixel, int Color);
-    void LCD_DisChar_1207(int Xchar, int Ychar, int Char_Offset, int Color);
+    void LCD_DrawLine(int Xstart, int Ystart, int Xend, int Yend, int Color, int Line_Width, int Line_Style);
+    void LCD_DisChar(int Xchar, int Ychar, int Char, int Color);
 };
 
-static const unsigned char Font12_Table[] =
-{
+static const unsigned char Font_Table[] = {
     0x00,  // ........
     0x00,  // ........
     0x00,  // ........
@@ -851,9 +855,4 @@ static const unsigned char Font12_Table[] =
 
 };
 
-
-
 #endif
-
-
-

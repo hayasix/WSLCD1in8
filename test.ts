@@ -97,6 +97,3 @@ LCD1IN8.Get_Color(LCD_COLOR.BLUE)
 )
 
 LCD1IN8.LCD_DisplayWindows(10,30,160,60)
-
-
-

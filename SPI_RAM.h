@@ -12,7 +12,7 @@
 #ifndef __SPI_RAM_H_
 #define __SPI_RAM_H_
 
-//data
+// data
 #define BYTE   unsigned char
 #define WORD   unsigned short
 
@@ -30,10 +30,10 @@
 #define STREAM_MODE 0x40
 
 
-class SPIRAM{
-public:    
+class SPIRAM {
+  public:
     void SPIRAM_SPI_Init(void);
-    
+
     void SPIRAM_Set_Mode(BYTE mode);
 
     BYTE SPIRAM_RD_Byte(WORD Addr);
