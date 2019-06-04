@@ -15,7 +15,9 @@
 #define __LCD_DRIVER_H
 
 // data
+#define BYTE    char
 #define UBYTE   unsigned char
+#define WORD    int
 #define UWORD   unsigned int
 
 // Define the full screen height length of the display
@@ -65,30 +67,30 @@ class LCD_Driver {
     void LCD_Reset(void);
     void LCD_InitReg(void);
 
-    void LCD_WriteReg(UBYTE Reg);
-    void LCD_WriteData_8Bit(UBYTE Data);
-    void LCD_WriteData_Buf(UWORD Buf, unsigned long Len);
+    void LCD_WriteReg(UBYTE reg);
+    void LCD_WriteData_8Bit(UBYTE data);
+    void LCD_WriteData_Buf(UWORD data, WORD length);
 
-    void LCD_SetWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend);
-    void LCD_SetCursor(UWORD X, UWORD Y);
-    void LCD_SetColor(UWORD Color, UWORD Xnum, UWORD Ynum);
+    void LCD_SetWindows(WORD left, WORD top, WORD right, WORD bottom);
+    void LCD_SetCursor(WORD X, WORD Y);
+    void LCD_SetColor(UWORD color, WORD x, WORD y);
 
-    void LCD_SetPoint(UWORD Xpoint, UWORD Ypoint, UWORD Color);
+    void LCD_SetPoint(WORD x, WORD y, UWORD color);
 
   public:
     void LCD_Init(void);
 
-    void LCD_SetBL(int Lev);
+    void LCD_SetBL(WORD level);
 
-    void LCD_Clear(UWORD Color);
+    void LCD_Clear(UWORD color);
     void LCD_ClearBuf(void);
 
     void LCD_Display(void);
-    void LCD_DisplayWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend);
+    void LCD_DisplayWindows(WORD left, WORD top, WORD right, WORD bottom);
 
-    void LCD_DrawPoint(int Xpoint, int Ypoint, DOT_PIXEL Dot_Pixel, int Color);
-    void LCD_DrawLine(int Xstart, int Ystart, int Xend, int Yend, int Color, int Line_Width, int Line_Style);
-    void LCD_DisChar(int Xchar, int Ychar, int Char, int Color);
+    void LCD_DrawPoint(WORD x, WORD y, DOT_PIXEL px, UWORD color);
+    void LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWORD color, WORD width, WORD style);
+    void LCD_DisChar(WORD x, WORD y, UBYTE c, UWORD Color);
 };
 
 static const unsigned char Font_Table[] = {

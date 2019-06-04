@@ -34,13 +34,13 @@ class SPIRAM {
   public:
     void SPIRAM_SPI_Init(void);
 
-    void SPIRAM_Set_Mode(BYTE mode);
+    void SPIRAM_Set_Mode(UBYTE mode);
 
-    BYTE SPIRAM_RD_Byte(WORD Addr);
-    void SPIRAM_WR_Byte(WORD Addr, BYTE Data);
-    void SPIRAM_RD_Page(WORD Addr, BYTE *pBuf);
-    void SPIRAM_WR_Page(WORD Addr, BYTE *pBuf);
-    void SPIRAM_RD_Stream(WORD Addr, BYTE *pBuf, unsigned long Len);
-    void SPIRAM_WR_Stream(WORD Addr, BYTE *pBuf, unsigned long Len);
+    UBYTE SPIRAM_RD_Byte(UWORD addr);
+    void SPIRAM_WR_Byte(UWORD addr, const UBYTE data);
+    void SPIRAM_RD_Page(UWORD addr, UBYTE *pagebuf);
+    void SPIRAM_WR_Page(UWORD addr, UBYTE *pagebuf);
+    void SPIRAM_RD_Stream(UWORD addr, UBYTE *pagebuf, UWORD length);
+    void SPIRAM_WR_Stream(UWORD addr, UBYTE *pagebuf, UWORD length);
 };
 #endif

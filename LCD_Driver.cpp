@@ -65,27 +65,27 @@ void LCD_Driver::LCD_Reset() {
 function:
     Write register address and data
 *******************************************************************************/
-void LCD_Driver::LCD_WriteReg(UBYTE Reg) {
+void LCD_Driver::LCD_WriteReg(UBYTE reg) {
     LCD_DC_0;
     LCD_CS_0;
-    LCD_SPI_Write_Byte(Reg);
+    LCD_SPI_Write_Byte(reg);
     LCD_CS_1;
 }
 
-void LCD_Driver::LCD_WriteData_8Bit(UBYTE Data) {
+void LCD_Driver::LCD_WriteData_8Bit(UBYTE data) {
     LCD_DC_1;
     LCD_CS_0;
-    LCD_SPI_Write_Byte(Data);
+    LCD_SPI_Write_Byte(data);
     LCD_CS_1;
 }
 
-void LCD_Driver::LCD_WriteData_Buf(UWORD Buf, unsigned long Len) {
-    unsigned long i;
+void LCD_Driver::LCD_WriteData_Buf(UWORD data, WORD length) {
+    WORD i;
     LCD_DC_1;
     LCD_CS_0;
-    for (i = 0; i < Len; i++) {
-        LCD_SPI_Write_Byte((int)(Buf >> 8));
-        LCD_SPI_Write_Byte((int)(Buf & 0XFF));
+    for (i = 0; i < length; i++) {
+        LCD_SPI_Write_Byte((UBYTE) (data >> 8));
+        LCD_SPI_Write_Byte((UBYTE) (data & 0xFF));
     }
     LCD_CS_1;
 }
@@ -196,20 +196,20 @@ parameter:
     Xend    :   X direction end coordinates
     Yend    :   Y direction end coordinates
 ********************************************************************************/
-void LCD_Driver::LCD_SetWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend) {
+void LCD_Driver::LCD_SetWindows(WORD left, WORD top, WORD right, WORD bottom) {
     // set the X coordinates
     LCD_WriteReg(0x2A);
     LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit((Xstart & 0xff) + 1);
+    LCD_WriteData_8Bit((left & 0xFF) + 1);
     LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit(((Xend - 1) & 0xff) + 1);
+    LCD_WriteData_8Bit(((right - 1) & 0xFF) + 1);
 
     // set the Y coordinates
     LCD_WriteReg(0x2B);
     LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit((Ystart & 0xff) + 2);
+    LCD_WriteData_8Bit((top & 0xFF) + 2);
     LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit(((Yend - 1) & 0xff)+ 2);
+    LCD_WriteData_8Bit(((bottom - 1) & 0xFF)+ 2);
 
     LCD_WriteReg(0x2C);
 }
@@ -218,16 +218,18 @@ void LCD_Driver::LCD_SetWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Ye
 function:
     Set the display point (Xpoint, Ypoint)
 ********************************************************************************/
-void LCD_Driver::LCD_SetCursor(UWORD Xpoint, UWORD Ypoint) {
-    LCD_SetWindows(Xpoint, Ypoint, Xpoint, Ypoint);
+void LCD_Driver::LCD_SetCursor(WORD x, WORD y) {
+    if (0 <= x && x < LCD_WIDTH && 0 <= y && y < LCD_HEIGHT) {
+        LCD_SetWindows(x, y, x, y);
+    }
 }
 
 /********************************************************************************
 function:
     Set show color
 ********************************************************************************/
-void LCD_Driver::LCD_SetColor(UWORD Color, UWORD Xpoint, UWORD Ypoint) {
-    LCD_WriteData_Buf(Color, (unsigned long)Xpoint * (unsigned long)Ypoint);
+void LCD_Driver::LCD_SetColor(UWORD color, WORD x, WORD y) {
+    LCD_WriteData_Buf(color, x * y);
 }
 
 /********************************************************************************
@@ -258,104 +260,105 @@ void LCD_Driver::LCD_Init() {
     LCD_WriteReg(0x29);
 }
 
-void LCD_Driver::LCD_SetBL(int Lev) {
-    float light = (float)Lev / 10;
-    LCD_BL.write(light);
+void LCD_Driver::LCD_SetBL(WORD level) {
+    LCD_BL.write((float) level / 10);
 }
 
 /********************************************************************************
 function:
     Clear screen
 ********************************************************************************/
-void LCD_Driver::LCD_Clear(UWORD Color) {
+void LCD_Driver::LCD_Clear(UWORD color) {
     LCD_SetWindows(0, 0, LCD_WIDTH, LCD_HEIGHT);
-    LCD_SetColor(Color, LCD_WIDTH + 2, LCD_HEIGHT + 2);
+    LCD_SetColor(color, LCD_WIDTH + 2, LCD_HEIGHT + 2);
 }
 
 void LCD_Driver::LCD_ClearBuf() {
-    UWORD x, y;
-    UWORD Color = 0xffff;
-    for (y = 0; y < 128; y++) {
-        for (x = 0; x < 160; x++) {  // 1 pixel = 2 byte
-            spiram->SPIRAM_WR_Byte((x + y * 160)* 2, Color >> 8);
-            spiram->SPIRAM_WR_Byte((x + y * 160)* 2 + 1, Color);
-        }
+    UWORD addr;
+    UWORD color = 0xFFFF;
+    UBYTE hi = (UBYTE) (color >> 8);
+    UBYTE lo = (UBYTE) (color & 0xFF);
+    for (addr = 0; addr < LCD_WIDTH * LCD_HEIGHT * 2; ) {
+        spiram->SPIRAM_WR_Byte(addr++, hi);
+        spiram->SPIRAM_WR_Byte(addr++, lo);
     }
 }
 
-void LCD_Driver::LCD_SetPoint(UWORD Xpoint, UWORD Ypoint, UWORD Color) {
-    UWORD Addr = (Xpoint + Ypoint * 160)* 2;
-    spiram->SPIRAM_WR_Byte(Addr, Color >> 8);
-    spiram->SPIRAM_WR_Byte(Addr + 1, Color & 0xff);
+void LCD_Driver::LCD_SetPoint(WORD x, WORD y, UWORD color) {
+    if (0 <= x && x < LCD_WIDTH && 0 <= y && y < LCD_HEIGHT) {
+        UWORD addr = (x + y * LCD_WIDTH) * 2;
+        spiram->SPIRAM_WR_Byte(addr++, (UBYTE) (color >> 8));
+        spiram->SPIRAM_WR_Byte(addr, (UBYTE) (color & 0xFF));
+    }
 }
 
 void LCD_Driver::LCD_Display() {
-    UWORD x, y;
-    UBYTE RBUF[160 * 2 * 2];  // read tow lines
-    memset(RBUF, 0xff, sizeof(RBUF));
+    WORD x, y;
+    UBYTE pagebuf[LCD_WIDTH * 2 * 2];  // read tow lines
+    memset(pagebuf, 0xFF, sizeof(pagebuf));
 
     spiram->SPIRAM_Set_Mode(STREAM_MODE);
-    LCD_SetWindows(0, 0, 160, 128);
-    for (y = 0; y < 128 / 2; y++) {  // line
-        spiram->SPIRAM_RD_Stream(y * 160 * 2 * 2, RBUF, 160 * 2 * 2);
+    LCD_SetWindows(0, 0, LCD_WIDTH, LCD_HEIGHT);
+    for (y = 0; y < LCD_HEIGHT / 2; y++) {  // line
+        spiram->SPIRAM_RD_Stream(y * LCD_WIDTH * 2 * 2, pagebuf, LCD_WIDTH * 2 * 2);
 
         LCD_DC_1;
         LCD_CS_0;
-        for (x = 0; x < 160 * 2; x++) {
-            LCD_SPI_Write_Byte((uint8_t)RBUF[x * 2]);
-            LCD_SPI_Write_Byte((uint8_t)RBUF[x * 2 + 1]);
+        for (x = 0; x < LCD_WIDTH * 2; x++) {
+            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
+            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
         }
         LCD_CS_1;
     }
 }
 
-void LCD_Driver::LCD_DisplayWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend) {
-    UWORD x, y;
-    UBYTE RBUF[(Xend - Xstart + 1) * 2];
-    memset(RBUF, 0xff, sizeof(RBUF));
+void LCD_Driver::LCD_DisplayWindows(WORD left, WORD top, WORD right, WORD bottom) {
+    WORD x, y;
+    UBYTE pagebuf[(right - left + 1) * 2];
+    memset(pagebuf, 0xFF, sizeof(pagebuf));
 
     spiram->SPIRAM_Set_Mode(STREAM_MODE);
-    LCD_SetWindows(Xstart, Ystart, Xend, Yend);
-    for (y = Ystart; y < Yend; y++) {  // line
-        spiram->SPIRAM_RD_Stream((y * 160 + Xstart) * 2, RBUF, sizeof(RBUF));
+    LCD_SetWindows(left, top, right, bottom);
+    for (y = top; y < bottom; y++) {  // line
+        spiram->SPIRAM_RD_Stream((y * LCD_WIDTH + left) * 2, pagebuf, sizeof(pagebuf));
 
         LCD_DC_1;
         LCD_CS_0;
-        for (x = 0; x < Xend - Xstart; x++) {
-            LCD_SPI_Write_Byte((uint8_t)RBUF[x * 2]);
-            LCD_SPI_Write_Byte((uint8_t)RBUF[x * 2 + 1]);
+        for (x = left; x < right; x++) {
+            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
+            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
         }
         LCD_CS_1;
     }
 }
 
-void LCD_Driver::LCD_DrawPoint(int Xpoint, int Ypoint, DOT_PIXEL Dot_Pixel, int Color) {
-    int XDir_Num ,YDir_Num;
-    for (XDir_Num = 0; XDir_Num < Dot_Pixel; XDir_Num++) {
-        for (YDir_Num = 0; YDir_Num < Dot_Pixel; YDir_Num++) {
-            LCD_SetPoint(Xpoint + XDir_Num - Dot_Pixel, Ypoint + YDir_Num - Dot_Pixel, Color);
+void LCD_Driver::LCD_DrawPoint(WORD x, WORD y, DOT_PIXEL px, UWORD color) {
+    WORD dx ,dy;
+    for (dx = 0; dx < px; dx++) {
+        for (dy = 0; dy < px; dy++) {
+            LCD_SetPoint(x + dx - px, y + dy - px, color);
         }
     }
 }
 
-void LCD_Driver::LCD_DrawLine(int Xstart, int Ystart, int Xend, int Yend, int Color, int Line_Width, int Line_Style) {
-    int x, y, dx, dy, e, pcnt;
+void LCD_Driver::LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWORD color, WORD width, WORD style) {
+    WORD x, y, dx, dy, e, pcnt;
 
-    if (Xstart > Xend) {  // Swap Xstart and Xend
-        Xend = Xstart - Xend;
-        Xstart -= Xend;
-        Xend += Xstart;
+    if (left > right) {  // Swap left and right
+        right = left - right;
+        left -= right;
+        right += left;
     }
-    if (Ystart > Yend) {  // Swap Ystart and Yend
-        Yend = Ystart - Yend;
-        Ystart -= Yend;
-        Yend += Ystart;
+    if (top > bottom) {  // Swap top and bottom
+        bottom = top - bottom;
+        top -= bottom;
+        bottom += top;
     }
 
-    x = Xstart;
-    y = Ystart;
-    dx = Xend - Xstart;
-    dy = Yend - Ystart;
+    x = left;
+    y = top;
+    dx = right - left;
+    dy = bottom - top;
 
     // Cumulative error
     e = dx + dy;
@@ -364,39 +367,42 @@ void LCD_Driver::LCD_DrawLine(int Xstart, int Ystart, int Xend, int Yend, int Co
 
     for (;;) {
         // Draw dotted line, 2 point is really virtual
-        if (Line_Style == LINE_STYLE.LINE_DOTTED) {
-            if (pcnt++ == 0) LCD_DrawPoint(x, y, Dot_Pixel, Color);
+        if (style == LINE_STYLE.LINE_DOTTED) {
+            if (pcnt++ == 0) LCD_DrawPoint(x, y, width, color);
             if (3 <= pcnt) pcnt = 0;
         } else {
-            LCD_DrawPoint(x, y, Dot_Pixel, Color);
+            LCD_DrawPoint(x, y, width, color);
         }
         if (2 * e >= dy) {
-            if (x >= Xend) break;
+            if (x >= right) break;
             e += dy;
             x++;
         }
         if (2 * e <= dx) {
-            if (y >= Yend) break;
+            if (y >= bottom) break;
             e += dx;
             y++;
         }
     }
 }
 
-void LCD_Driver::LCD_DisChar(int Xchar, int Ychar, int Char, int Color) {
-    int Page = 0, Column = 0;
-    unsigned char *ptr;
-    unsigned char d;
+void LCD_Driver::LCD_DisChar(WORD x, WORD y, UBYTE c, UWORD color) {
+    WORD fontline = 0, fontcolumn = 0;
+    UBYTE *p;
+    UBYTE d;
 
-    if (Char < 32 || 127 <= Char) return;
-    Char -= 32;
-    ptr = Font_Table + Char * LCD_CHAR_WIDTH_BYTES * LCD_CHAR_HEIGHT;
+    if (c < 32 || 127 <= c) return;
+    c -= 32;
+    p = Font_Table + c * LCD_CHAR_WIDTH_BYTES * LCD_CHAR_HEIGHT;
 
-    for (Page = 0; Page < 8; Page++) {
-        d = *ptr;
-        for (Column = 0; Column < LCD_CHAR_WIDTH; Column++) {
-            if (d & 0x80) LCD_SetPoint(Xchar + Column, Ychar + Page, Color);
-            d = Column % 8 == 7 ? *(++ptr) : d << 1;
+    for (fontline = 0; fontline < LCD_CHAR_HEIGHT; fontline++) {
+        d = *p;
+        for (fontcolumn = 0; fontcolumn < LCD_CHAR_WIDTH; fontcolumn++) {
+            if (d & 0x80) LCD_SetPoint(x + fontcolumn, y + fontline, color);
+            if (fontcolumn % 8 == 7) {
+                d = *++p;
+            } else {
+                d <<= 1;
             }
         }
     }
