@@ -112,7 +112,7 @@ namespace LCD1IN8 {
     }
 
     //% shim=LCD1IN8::drawChar
-    function drawChar(x: number, y: number, ch: string, color: number): void {
+    export function drawChar(x: number, y: number, ch: string, color: number): void {
         return;
     }
 
