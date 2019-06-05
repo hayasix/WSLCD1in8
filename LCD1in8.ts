@@ -37,10 +37,10 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_Filling
     //% blockGap=8
-    //% block="Filling Color %Color"
+    //% block="Filling Color %color"
     //% shim=LCD1IN8::LCD_Filling
     //% weight=194
-    export function LCD_Filling(Color: number): void {
+    export function LCD_Filling(color: number): void {
        return;
     }
 
@@ -55,63 +55,63 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_DisplayWindows
     //% blockGap=8
-    //% block="Show Windows display data |Xstart %Xstart|Ystart %Ystart|Xend %Xend|Yend %Yend "
+    //% block="Show Windows display data |Xstart %left|Ystart %top|Xend %right|Yend %bottom "
     //% shim=LCD1IN8::LCD_DisplayWindows
-    //% Xstart.min=1 Xstart.max=160 Ystart.min=1 Ystart.max=128
-    //% Xend.min=1 Xend.max=160 Yend.min=1 Yend.max=128
+    //% left.min=1 left.max=160 top.min=1 top.max=128
+    //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
     //% weight=189
     export function LCD_DisplayWindows(
-            Xstart: number,
-            Ystart: number,
-            Xend: number,
-            Yend: number): void {
+            left: number,
+            top: number,
+            right: number,
+            bottom: number): void {
         return;
     }
 
     //% blockId=Get_Color
     //% blockGap=8
-    //% block="%Color"
+    //% block="%color"
     //% weight=185
-    export function Get_Color(Color: LCD_COLOR): number{
-        return Color;
+    export function Get_Color(color: LCD_COLOR): number{
+        return color;
     }
 
     //% blockId=LCD_SetBL
     //% blockGap=8
-    //% block="Set back light level %Lev"
-    //% Lev.min=0 Lev.max=10
+    //% block="Set back light level %level"
+    //% level.min=0 level.max=10
     //% shim=LCD1IN8::LCD_SetBL
     //% weight=180
-    export function LCD_SetBL(Lev: number): void {
+    export function LCD_SetBL(level: number): void {
         return;
     }
 
     //% blockId=DrawPoint
     //% blockGap=8
-    //% block="Draw Point|x %x|y %y|Color %Color|Point Size %Dot"
+    //% block="Draw Point|x %x|y %y|Color %color|Point Size %pix"
     //% x.min=1 x.max=160 y.min=1 y.max=128
-    //% Color.min=0 Color.max=65535
+    //% color.min=0 color.max=65535
     //% shim=LCD1IN8::DrawPoint
     //% weight=150
-    export function DrawPoint(x: number, y: number, Color: number, Dot: DOT_PIXEL): void {
+    export function DrawPoint(x: number, y: number, color: number, pix: DOT_PIXEL): void {
         return;
     }
 
     //% blockId=DrawLine
     //% blockGap=8
-    //% block="Draw Line|Xstart %Xstart|Ystart %Ystart|Xend %Xend|Yend %Yend|Color %Color|Line width %Line_width|Line Style %Line_Style"
-    //% Xstart.min=1 Xstart.max=160 Ystart.min=1 Ystart.max=128
-    //% Xend.min=1 Xend.max=160 Yend.min=1 Yend.max=128
-    //% Color.min=0 Color.max=65535
+    //% block="Draw Line|Xstart %left|Ystart %top|Xend %right|Yend %bottom|Color %color|Line width %width|Line Style %style"
+    //% left.min=1 left.max=160 top.min=1 top.max=128
+    //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
+    //% color.min=0 color.max=65535
     //% weight=140
     export function DrawLine(
-            Xstart: number,
-            Ystart: number,
-            Xend: number,
-            Yend: number,
-            Color: number,
-            Line_width: DOT_PIXEL,
-            Line_Style: LINE_STYLE): void {
+            left: number,
+            top: number,
+            right: number,
+            bottom: number,
+            color: number,
+            width: DOT_PIXEL,
+            style: LINE_STYLE): void {
         return;
     }
 
@@ -126,10 +126,10 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_Filling
     //% blockGap=8
-    //% block="Filling Color %Color"
+    //% block="Filling Color %color"
     //% shim=LCD1IN8::LCD_Filling
     //% weight=194
-    export function LCD_Filling(Color: number): void {
+    export function LCD_Filling(color: number): void {
         return;
     }
 
@@ -144,30 +144,30 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_DisplayWindows
     //% blockGap=8
-    //% block="Show Windows display data |Xstart %Xstart|Ystart %Ystart|Xend %Xend|Yend %Yend "
+    //% block="Show Windows display data |Xstart %left|Ystart %top|Xend %right|Yend %bottom "
     //% shim=LCD1IN8::LCD_DisplayWindows
-    //% Xstart.min=1 Xstart.max=160 Ystart.min=1 Ystart.max=128
-    //% Xend.min=1 Xend.max=160 Yend.min=1 Yend.max=128
+    //% left.min=1 left.max=160 top.min=1 top.max=128
+    //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
     //% weight=189
-    export function LCD_DisplayWindows(Xstart: number, Ystart: number, Xend: number, Yend: number): void {
+    export function LCD_DisplayWindows(left: number, top: number, right: number, bottom: number): void {
         return;
     }
 
     //% blockId=Get_Color
     //% blockGap=8
-    //% block="%Color"
+    //% block="%color"
     //% weight=185
-    export function Get_Color(Color: LCD_COLOR): number {
-        return Color;
+    export function Get_Color(color: LCD_COLOR): number {
+        return color;
     }
 
     //% blockId=LCD_SetBL
     //% blockGap=8
-    //% block="Set back light level %Lev"
-    //% Lev.min=0 Lev.max=10
+    //% block="Set back light level %level"
+    //% level.min=0 level.max=10
     //% shim=LCD1IN8::LCD_SetBL
     //% weight=180
-    export function LCD_SetBL(Lev: number): void {
+    export function LCD_SetBL(level: number): void {
         return;
     }
 
@@ -175,74 +175,72 @@ namespace LCD1IN8 {
     //% blockGap=8
     //% block="Draw Point|x %x|y %y|Color %Color|Point Size %Dot"
     //% x.min=1 x.max=160 y.min=1 y.max=128
-    //% Color.min=0 Color.max=65535
+    //% color.min=0 color.max=65535
     //% shim=LCD1IN8::DrawPoint
     //% weight=150
-    export function DrawPoint(x: number, y: number, Color: number, Dot: DOT_PIXEL): void {
+    export function DrawPoint(x: number, y: number, color: number, pix: DOT_PIXEL): void {
         return;
     }
 
      //% blockId=DrawLine
      //% blockGap=8
-     //% block="Draw Line|Xstart %Xstart|Ystart %Ystart|Xend %Xend|Yend %Yend|Color %Color|Line width %Line_width|Line Style %Line_Style"
-     //% Xstart.min=1 Xstart.max=160 Ystart.min=1 Ystart.max=128
-     //% Xend.min=1 Xend.max=160 Yend.min=1 Yend.max=128
-     //% Color.min=0 Color.max=65535
+     //% block="Draw Line|Xstart %left|Ystart %top|Xend %right|Yend %bottom|Color %color|Line width %width|Line Style %style"
+     //% left.min=1 left.max=160 top.min=1 top.max=128
+     //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
+     //% color.min=0 color.max=65535
      //% weight=140
     export function DrawLine(
-            Xstart: number,
-            Ystart: number,
-            Xend: number,
-            Yend: number,
+            left: number,
+            top: number,
+            right: number,
+            bottom: number,
             Color: number,
-            Line_width: DOT_PIXEL,
-            Line_Style: LINE_STYLE): void {
+            width: DOT_PIXEL,
+            style: LINE_STYLE): void {
         return;
     }
 
     //% shim=LCD1IN8::DisChar
-    function DisChar(Xchar: number, Ychar: number, Char: string, Color: number): void {
+    function DisChar(x: number, y: number, ch: string, color: number): void {
         return;
     }
 
     //% blockId=DisString
     //% blockGap=8
-    //% block="Show String|X %Xchar|Y %Ychar|char %ch|Color %Color"
-    //% Xchar.min=1 Xchar.max=160 Ychar.min=1 Ychar.max=128
-    //% Color.min=0 Color.max=65535
+    //% block="Show String|X %x|Y %y|char %ch|Color %color"
+    //% x.min=1 x.max=160 y.min=1 y.max=128
+    //% color.min=0 color.max=65535
     //% weight=100
-    export function DisString(Xchar: number, Ychar: number, ch: string, Color: number): void {
-        let Xpoint = Xchar;
-        let Ypoint = Ychar;
-        let Font_Height = 8;
-        let Font_Width = 8;
-        for (let i = 0; i < ch.length; i++) {
-            if (Xpoint + Font_Width > 160) {  // newline
-                Xpoint = Xchar;
-                Ypoint += Font_Height;
+    export function DisString(x: number, y: number, s: string, color: number): void {
+        let left = x;
+        let top = y;
+        let height = 8;
+        let width = 8;
+        for (let i = 0; i < s.length; i++) {
+            if (x + width > 160) {  // newline
+                x = left;
+                y += height;
             }
             // If the Y direction is full, reposition to(Xstart, Ystart)
-            if(Ypoint  + Font_Height > 128) {
-                Xpoint = Xchar;
-                Ypoint = Ychar;
+            if(y  + height > 128) {
+                x = left;
+                y = top;
             }
-            DisChar(Xpoint, Ypoint, ch.charCodeAt(i), Color);
+            DisChar(x, y, s.charCodeAt(i), color);
 
             // The next word of the abscissa increases the font of the broadband
-            Xpoint += Font_Width;
+            x += width;
         }
     }
 
     //% blockId=DisNumber
     //% blockGap=8
-    //% block="Show number|X %Xnum|Y %Ynum|number %num|Color %Color"
-    //% Xnum.min=1 Xnum.max=160 Ynum.min=1 Ynum.max=128
-    //% Color.min=0 Color.max=65535
+    //% block="Show number|X %x|Y %y|number %num|Color %color"
+    //% x.min=1 x.max=160 y.min=1 y.max=128
+    //% color.min=0 color.max=65535
     //% weight=100
-    export function DisNumber(Xnum: number, Ynum: number, num: number, Color: number): void {
-        let Xpoint = Xnum;
-        let Ypoint = Ynum;
-        DisString(Xnum, Ynum, num + "", Color);
+    export function DisNumber(x: number, y: number, num: number, color: number): void {
+        DisString(x, y, num + "", color);
     }
 
 }  // namespace LCD1IN8

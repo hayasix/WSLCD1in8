@@ -40,27 +40,27 @@ namespace LCD1IN8 {
     }
 
     // %
-    void LCD_DisplayWindows(int Xstart, int Ystart, int Xend, int Yend) {
-        LCD->LCD_DisplayWindows(Xstart, Ystart, Xend, Yend);
+    void LCD_DisplayWindows(int left, int top, int right, int bottom) {
+        LCD->LCD_DisplayWindows(left, top, right, bottom);
     }
 
     // %
-    void LCD_SetBL(int Lev) {
-        LCD->LCD_SetBL(Lev);
+    void LCD_SetBL(int level) {
+        LCD->LCD_SetBL(level);
     }
 
     // %
-    void DrawPoint(int x, int y, int Color, DOT_PIXEL Dot) {
-        LCD->LCD_DrawPoint(x, y, Dot, Color);
+    void DrawPoint(int x, int y, int color, DOT_PIXEL pix) {
+        LCD->LCD_DrawPoint(x, y, pix, color);
     }
 
     // %
-    void DrawLine(int Xstart, int Ystart, int Xend, int Yend, int Color, DOT_PIXEL Dot) {
-        LCD->LCD_DrawPoint(Xstart, Ystart, Xend, Yend, Color, 1, Dot);
+    void DrawLine(int left, int top, int right, int bottom, int color, DOT_PIXEL pix) {
+        LCD->LCD_DrawPoint(left, top, right, bottom, color, 1, pix);
     }
 
     // %
-    void DisChar(int Xchar, int Ychar, int Char, int Color) {
-        LCD->LCD_DisChar(Xchar, Ychar, Char, Color);
+    void DisChar(int x, int y, int ch, int color) {
+        LCD->LCD_DisChar(x, y, ch, color);
     }
 }

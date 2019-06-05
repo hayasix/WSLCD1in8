@@ -386,14 +386,14 @@ void LCD_Driver::LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWOR
     }
 }
 
-void LCD_Driver::LCD_DisChar(WORD x, WORD y, UBYTE c, UWORD color) {
+void LCD_Driver::LCD_DisChar(WORD x, WORD y, UBYTE ch, UWORD color) {
     WORD fontline = 0, fontcolumn = 0;
     UBYTE *p;
     UBYTE d;
 
-    if (c < 32 || 127 <= c) return;
-    c -= 32;
-    p = Font_Table + c * LCD_CHAR_WIDTH_BYTES * LCD_CHAR_HEIGHT;
+    if (ch < 0x20 || 0x7F <= ch) return;
+    ch -= 0x20;
+    p = Font_Table + ch * LCD_CHAR_WIDTH_BYTES * LCD_CHAR_HEIGHT;
 
     for (fontline = 0; fontline < LCD_CHAR_HEIGHT; fontline++) {
         d = *p;

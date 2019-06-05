@@ -13,8 +13,10 @@
 #define __SPI_RAM_H_
 
 // data
-#define BYTE   unsigned char
-#define WORD   unsigned short
+#define BYTE   char
+#define UBYTE  unsigned char
+#define WORD   int
+#define UWORD  unsigned int
 
 // SRAM opcodes
 #define CMD_WREN  0x06

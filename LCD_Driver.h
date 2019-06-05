@@ -25,7 +25,7 @@
 #define LCD_HEIGHT 128  // LCD height
 #define LCD_CHAR_WIDTH 8
 #define LCD_CHAR_HEIGHT 8
-#define LCD_CHAR_WIDTH_BYTES ((int)(LCD_CHAR_WIDTH / 8))
+#define LCD_CHAR_WIDTH_BYTES ((UWORD) (LCD_CHAR_WIDTH / 8))
 
 enum LCD_COLOR {
     WHITE = 0xFFFF,
@@ -90,7 +90,7 @@ class LCD_Driver {
 
     void LCD_DrawPoint(WORD x, WORD y, DOT_PIXEL px, UWORD color);
     void LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWORD color, WORD width, WORD style);
-    void LCD_DisChar(WORD x, WORD y, UBYTE c, UWORD Color);
+    void LCD_DisChar(WORD x, WORD y, UBYTE ch, UWORD Color);
 };
 
 static const unsigned char Font_Table[] = {

@@ -94,7 +94,7 @@ void SPIRAM::SPIRAM_RD_Page(UWORD addr, UBYTE *pagebuf) {
     SPIRAM_CS_0;
     SPIRAM_SPI_Write_Byte(CMD_READ);
 
-    SPIRAM_SPI_Write_Byte(0X00);
+    SPIRAM_SPI_Write_Byte(0x00);
     SPIRAM_SPI_Write_Byte((UBYTE) (addr >> 8));
     SPIRAM_SPI_Write_Byte((UBYTE) (addr & 0xff));
 
@@ -145,7 +145,7 @@ void SPIRAM::SPIRAM_RD_Stream(UWORD addr, UBYTE *pagebuf, UWORD length) {
     SPIRAM_CS_1;
 }
 
-void SPIRAM::SPIRAM_WR_Stream(UWORD Addr, UBYTE *pagebuf, UWORD length) {
+void SPIRAM::SPIRAM_WR_Stream(UWORD addr, UBYTE *pagebuf, UWORD length) {
     WORD i;
 
     // Write Addr, read data
