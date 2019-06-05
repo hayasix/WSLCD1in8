@@ -53,15 +53,6 @@ namespace LCD1IN8 {
         return;
     }
 
-    //% blockId=LCD_putDisplayBuffer
-    //% blockGap=8
-    //% block="Send display buffer data"
-    //% shim=LCD1IN8::LCD_putDisplayBuffer
-    //% weight=190
-    export function LCD_putDisplayBuffer(): void {
-        return;
-    }
-
     //% blockId=LCD_displayWindow
     //% blockGap=8
     //% block="show window display data |left %left|top %top|right %right|bottom %bottom "
