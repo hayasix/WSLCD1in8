@@ -18,7 +18,7 @@
 
 // spi
 SPI lcd_spi(MOSI, MISO, SCK);
-#define LCD_SPI_Write_Byte(value) lcd_spi.write(value)
+#define LCD_SPI_writeByte(value) lcd_spi.write(value)
 
 // LCD
 DigitalOut LCD_RST(MICROBIT_PIN_P8);
@@ -43,7 +43,7 @@ SPIRAM *spiram;
 function:
     Initialization system
 *********************************************/
-void LCD_Driver::LCD_SPI_Init() {
+void LCD_Driver::LCD_SPI_initialize() {
     lcd_spi.format(8,0);
     lcd_spi.frequency(9000000);
 }
@@ -52,7 +52,7 @@ void LCD_Driver::LCD_SPI_Init() {
 function:
     Hardware reset
 *******************************************************************************/
-void LCD_Driver::LCD_Reset() {
+void LCD_Driver::LCD_reset() {
     LCD_RST_1;
     Driver_Delay_ms(100);
     LCD_RST_0;
@@ -65,27 +65,27 @@ void LCD_Driver::LCD_Reset() {
 function:
     Write register address and data
 *******************************************************************************/
-void LCD_Driver::LCD_WriteReg(UBYTE reg) {
+void LCD_Driver::LCD_writeRegister(UBYTE reg) {
     LCD_DC_0;
     LCD_CS_0;
-    LCD_SPI_Write_Byte(reg);
+    LCD_SPI_writeByte(reg);
     LCD_CS_1;
 }
 
-void LCD_Driver::LCD_WriteData_8Bit(UBYTE data) {
+void LCD_Driver::LCD_writeByte(UBYTE data) {
     LCD_DC_1;
     LCD_CS_0;
-    LCD_SPI_Write_Byte(data);
+    LCD_SPI_writeByte(data);
     LCD_CS_1;
 }
 
-void LCD_Driver::LCD_WriteData_Buf(UWORD data, WORD length) {
+void LCD_Driver::LCD_writeStream(UWORD data, WORD length) {
     WORD i;
     LCD_DC_1;
     LCD_CS_0;
     for (i = 0; i < length; i++) {
-        LCD_SPI_Write_Byte((UBYTE) (data >> 8));
-        LCD_SPI_Write_Byte((UBYTE) (data & 0xFF));
+        LCD_SPI_writeByte((UBYTE) (data >> 8));
+        LCD_SPI_writeByte((UBYTE) (data & 0xFF));
     }
     LCD_CS_1;
 }
@@ -93,99 +93,99 @@ void LCD_Driver::LCD_WriteData_Buf(UWORD data, WORD length) {
 function:
     Common register initialization
 *******************************************************************************/
-void LCD_Driver::LCD_InitReg() {
+void LCD_Driver::LCD_initializeRegister() {
     // ST7735R Frame Rate
-    LCD_WriteReg(0xB1);
-    LCD_WriteData_8Bit(0x01);
-    LCD_WriteData_8Bit(0x2C);
-    LCD_WriteData_8Bit(0x2D);
+    LCD_writeRegister(0xB1);
+    LCD_writeByte(0x01);
+    LCD_writeByte(0x2C);
+    LCD_writeByte(0x2D);
 
-    LCD_WriteReg(0xB2);
-    LCD_WriteData_8Bit(0x01);
-    LCD_WriteData_8Bit(0x2C);
-    LCD_WriteData_8Bit(0x2D);
+    LCD_writeRegister(0xB2);
+    LCD_writeByte(0x01);
+    LCD_writeByte(0x2C);
+    LCD_writeByte(0x2D);
 
-    LCD_WriteReg(0xB3);
-    LCD_WriteData_8Bit(0x01);
-    LCD_WriteData_8Bit(0x2C);
-    LCD_WriteData_8Bit(0x2D);
-    LCD_WriteData_8Bit(0x01);
-    LCD_WriteData_8Bit(0x2C);
-    LCD_WriteData_8Bit(0x2D);
+    LCD_writeRegister(0xB3);
+    LCD_writeByte(0x01);
+    LCD_writeByte(0x2C);
+    LCD_writeByte(0x2D);
+    LCD_writeByte(0x01);
+    LCD_writeByte(0x2C);
+    LCD_writeByte(0x2D);
 
-    LCD_WriteReg(0xB4);  // Column inversion
-    LCD_WriteData_8Bit(0x07);
+    LCD_writeRegister(0xB4);  // Column inversion
+    LCD_writeByte(0x07);
 
     // ST7735R Power Sequence
-    LCD_WriteReg(0xC0);
-    LCD_WriteData_8Bit(0xA2);
-    LCD_WriteData_8Bit(0x02);
-    LCD_WriteData_8Bit(0x84);
-    LCD_WriteReg(0xC1);
-    LCD_WriteData_8Bit(0xC5);
+    LCD_writeRegister(0xC0);
+    LCD_writeByte(0xA2);
+    LCD_writeByte(0x02);
+    LCD_writeByte(0x84);
+    LCD_writeRegister(0xC1);
+    LCD_writeByte(0xC5);
 
-    LCD_WriteReg(0xC2);
-    LCD_WriteData_8Bit(0x0A);
-    LCD_WriteData_8Bit(0x00);
+    LCD_writeRegister(0xC2);
+    LCD_writeByte(0x0A);
+    LCD_writeByte(0x00);
 
-    LCD_WriteReg(0xC3);
-    LCD_WriteData_8Bit(0x8A);
-    LCD_WriteData_8Bit(0x2A);
-    LCD_WriteReg(0xC4);
-    LCD_WriteData_8Bit(0x8A);
-    LCD_WriteData_8Bit(0xEE);
+    LCD_writeRegister(0xC3);
+    LCD_writeByte(0x8A);
+    LCD_writeByte(0x2A);
+    LCD_writeRegister(0xC4);
+    LCD_writeByte(0x8A);
+    LCD_writeByte(0xEE);
 
-    LCD_WriteReg(0xC5);  // VCOM
-    LCD_WriteData_8Bit(0x0E);
+    LCD_writeRegister(0xC5);  // VCOM
+    LCD_writeByte(0x0E);
 
     // ST7735R Gamma Sequence
-    LCD_WriteReg(0xe0);
-    LCD_WriteData_8Bit(0x0f);
-    LCD_WriteData_8Bit(0x1a);
-    LCD_WriteData_8Bit(0x0f);
-    LCD_WriteData_8Bit(0x18);
-    LCD_WriteData_8Bit(0x2f);
-    LCD_WriteData_8Bit(0x28);
-    LCD_WriteData_8Bit(0x20);
-    LCD_WriteData_8Bit(0x22);
-    LCD_WriteData_8Bit(0x1f);
-    LCD_WriteData_8Bit(0x1b);
-    LCD_WriteData_8Bit(0x23);
-    LCD_WriteData_8Bit(0x37);
-    LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit(0x07);
-    LCD_WriteData_8Bit(0x02);
-    LCD_WriteData_8Bit(0x10);
+    LCD_writeRegister(0xe0);
+    LCD_writeByte(0x0f);
+    LCD_writeByte(0x1a);
+    LCD_writeByte(0x0f);
+    LCD_writeByte(0x18);
+    LCD_writeByte(0x2f);
+    LCD_writeByte(0x28);
+    LCD_writeByte(0x20);
+    LCD_writeByte(0x22);
+    LCD_writeByte(0x1f);
+    LCD_writeByte(0x1b);
+    LCD_writeByte(0x23);
+    LCD_writeByte(0x37);
+    LCD_writeByte(0x00);
+    LCD_writeByte(0x07);
+    LCD_writeByte(0x02);
+    LCD_writeByte(0x10);
 
-    LCD_WriteReg(0xe1);
-    LCD_WriteData_8Bit(0x0f);
-    LCD_WriteData_8Bit(0x1b);
-    LCD_WriteData_8Bit(0x0f);
-    LCD_WriteData_8Bit(0x17);
-    LCD_WriteData_8Bit(0x33);
-    LCD_WriteData_8Bit(0x2c);
-    LCD_WriteData_8Bit(0x29);
-    LCD_WriteData_8Bit(0x2e);
-    LCD_WriteData_8Bit(0x30);
-    LCD_WriteData_8Bit(0x30);
-    LCD_WriteData_8Bit(0x39);
-    LCD_WriteData_8Bit(0x3f);
-    LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit(0x07);
-    LCD_WriteData_8Bit(0x03);
-    LCD_WriteData_8Bit(0x10);
+    LCD_writeRegister(0xe1);
+    LCD_writeByte(0x0f);
+    LCD_writeByte(0x1b);
+    LCD_writeByte(0x0f);
+    LCD_writeByte(0x17);
+    LCD_writeByte(0x33);
+    LCD_writeByte(0x2c);
+    LCD_writeByte(0x29);
+    LCD_writeByte(0x2e);
+    LCD_writeByte(0x30);
+    LCD_writeByte(0x30);
+    LCD_writeByte(0x39);
+    LCD_writeByte(0x3f);
+    LCD_writeByte(0x00);
+    LCD_writeByte(0x07);
+    LCD_writeByte(0x03);
+    LCD_writeByte(0x10);
 
-    LCD_WriteReg(0xF0);  // Enable test command
-    LCD_WriteData_8Bit(0x01);
+    LCD_writeRegister(0xF0);  // Enable test command
+    LCD_writeByte(0x01);
 
-    LCD_WriteReg(0xF6);  // Disable ram power save mode
-    LCD_WriteData_8Bit(0x00);
+    LCD_writeRegister(0xF6);  // Disable ram power save mode
+    LCD_writeByte(0x00);
 
-    LCD_WriteReg(0x3A);  // 65k mode
-    LCD_WriteData_8Bit(0x05);
+    LCD_writeRegister(0x3A);  // 65k mode
+    LCD_writeByte(0x05);
 
-    LCD_WriteReg(0x36);  // MX, MY, RGB mode
-    LCD_WriteData_8Bit(0xF7 & 0xA0);  // RGB color filter panel
+    LCD_writeRegister(0x36);  // MX, MY, RGB mode
+    LCD_writeByte(0xF7 & 0xA0);  // RGB color filter panel
 }
 
 /********************************************************************************
@@ -196,31 +196,31 @@ parameter:
     right   :   X direction end coordinates
     bottom  :   Y direction end coordinates
 ********************************************************************************/
-void LCD_Driver::LCD_SetWindows(WORD left, WORD top, WORD right, WORD bottom) {
+void LCD_Driver::LCD_setWindow(WORD left, WORD top, WORD right, WORD bottom) {
     // set the X coordinates
-    LCD_WriteReg(0x2A);
-    LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit((left & 0xFF) + 1);
-    LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit(((right - 1) & 0xFF) + 1);
+    LCD_writeRegister(0x2A);
+    LCD_writeByte(0x00);
+    LCD_writeByte((left & 0xFF) + 1);
+    LCD_writeByte(0x00);
+    LCD_writeByte(((right - 1) & 0xFF) + 1);
 
     // set the Y coordinates
-    LCD_WriteReg(0x2B);
-    LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit((top & 0xFF) + 2);
-    LCD_WriteData_8Bit(0x00);
-    LCD_WriteData_8Bit(((bottom - 1) & 0xFF)+ 2);
+    LCD_writeRegister(0x2B);
+    LCD_writeByte(0x00);
+    LCD_writeByte((top & 0xFF) + 2);
+    LCD_writeByte(0x00);
+    LCD_writeByte(((bottom - 1) & 0xFF)+ 2);
 
-    LCD_WriteReg(0x2C);
+    LCD_writeRegister(0x2C);
 }
 
 /********************************************************************************
 function:
     Set the display point (x, y)
 ********************************************************************************/
-void LCD_Driver::LCD_SetCursor(WORD x, WORD y) {
+void LCD_Driver::LCD_setCursor(WORD x, WORD y) {
     if (0 <= x && x < LCD_WIDTH && 0 <= y && y < LCD_HEIGHT) {
-        LCD_SetWindows(x, y, x, y);
+        LCD_setWindow(x, y, x, y);
     }
 }
 
@@ -228,39 +228,39 @@ void LCD_Driver::LCD_SetCursor(WORD x, WORD y) {
 function:
     Set show color
 ********************************************************************************/
-void LCD_Driver::LCD_SetColor(UWORD color, WORD x, WORD y) {
-    LCD_WriteData_Buf(color, x * y);
+void LCD_Driver::LCD_setColor(UWORD color, WORD x, WORD y) {
+    LCD_writeStream(color, x * y);
 }
 
 /********************************************************************************
 function:
     initialization
 ********************************************************************************/
-void LCD_Driver::LCD_Init() {
-    LCD_SPI_Init();
+void LCD_Driver::LCD_initialize() {
+    LCD_SPI_initialize();
 
-    spiram->SPIRAM_SPI_Init();
-    spiram->SPIRAM_Set_Mode(BYTE_MODE);
+    spiram->SPIRAM_SPI_initialize();
+    spiram->SPIRAM_setMode(BYTE_MODE);
 
     // back light
     LCD_BL.period(0.02);
     LCD_BL.write(0.50f);
 
     // Hardware reset
-    LCD_Reset();
+    LCD_reset();
 
     // Set the initialization register
-    LCD_InitReg();
+    LCD_initializeRegister();
 
     // sleep out
-    LCD_WriteReg(0x11);
+    LCD_writeRegister(0x11);
     Driver_Delay_ms(120);
 
     // Turn on the LCD display
-    LCD_WriteReg(0x29);
+    LCD_writeRegister(0x29);
 }
 
-void LCD_Driver::LCD_SetBL(WORD level) {
+void LCD_Driver::LCD_backlightLevel(WORD level) {
     LCD_BL.write((float) level / 10);
 }
 
@@ -268,80 +268,80 @@ void LCD_Driver::LCD_SetBL(WORD level) {
 function:
     Clear screen
 ********************************************************************************/
-void LCD_Driver::LCD_Clear(UWORD color) {
-    LCD_SetWindows(0, 0, LCD_WIDTH, LCD_HEIGHT);
-    LCD_SetColor(color, LCD_WIDTH + 2, LCD_HEIGHT + 2);
+void LCD_Driver::LCD_clear(UWORD color) {
+    LCD_setWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
+    LCD_setColor(color, LCD_WIDTH + 2, LCD_HEIGHT + 2);
 }
 
-void LCD_Driver::LCD_ClearBuf() {
+void LCD_Driver::LCD_clearBuffer() {
     UWORD addr;
     UWORD color = 0xFFFF;
     UBYTE hi = (UBYTE) (color >> 8);
     UBYTE lo = (UBYTE) (color & 0xFF);
     for (addr = 0; addr < LCD_WIDTH * LCD_HEIGHT * 2; ) {
-        spiram->SPIRAM_WR_Byte(addr++, hi);
-        spiram->SPIRAM_WR_Byte(addr++, lo);
+        spiram->SPIRAM_writeByte(addr++, hi);
+        spiram->SPIRAM_writeByte(addr++, lo);
     }
 }
 
-void LCD_Driver::LCD_SetPoint(WORD x, WORD y, UWORD color) {
+void LCD_Driver::LCD_setPoint(WORD x, WORD y, UWORD color) {
     if (0 <= x && x < LCD_WIDTH && 0 <= y && y < LCD_HEIGHT) {
         UWORD addr = (x + y * LCD_WIDTH) * 2;
-        spiram->SPIRAM_WR_Byte(addr++, (UBYTE) (color >> 8));
-        spiram->SPIRAM_WR_Byte(addr, (UBYTE) (color & 0xFF));
+        spiram->SPIRAM_writeByte(addr++, (UBYTE) (color >> 8));
+        spiram->SPIRAM_writeByte(addr, (UBYTE) (color & 0xFF));
     }
 }
 
-void LCD_Driver::LCD_Display() {
+void LCD_Driver::LCD_display() {
     WORD x, y;
     UBYTE pagebuf[LCD_WIDTH * 2 * 2];  // read tow lines
     memset(pagebuf, 0xFF, sizeof(pagebuf));
 
-    spiram->SPIRAM_Set_Mode(STREAM_MODE);
-    LCD_SetWindows(0, 0, LCD_WIDTH, LCD_HEIGHT);
+    spiram->SPIRAM_setMode(STREAM_MODE);
+    LCD_setWindow(0, 0, LCD_WIDTH, LCD_HEIGHT);
     for (y = 0; y < LCD_HEIGHT / 2; y++) {  // line
-        spiram->SPIRAM_RD_Stream(y * LCD_WIDTH * 2 * 2, pagebuf, LCD_WIDTH * 2 * 2);
+        spiram->SPIRAM_readStream(y * LCD_WIDTH * 2 * 2, pagebuf, LCD_WIDTH * 2 * 2);
 
         LCD_DC_1;
         LCD_CS_0;
         for (x = 0; x < LCD_WIDTH * 2; x++) {
-            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
-            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
+            LCD_SPI_writeByte((UBYTE) *pagebuf++);
+            LCD_SPI_writeByte((UBYTE) *pagebuf++);
         }
         LCD_CS_1;
     }
 }
 
-void LCD_Driver::LCD_DisplayWindows(WORD left, WORD top, WORD right, WORD bottom) {
+void LCD_Driver::LCD_displayWindow(WORD left, WORD top, WORD right, WORD bottom) {
     WORD x, y;
     UBYTE pagebuf[(right - left + 1) * 2];
     memset(pagebuf, 0xFF, sizeof(pagebuf));
 
-    spiram->SPIRAM_Set_Mode(STREAM_MODE);
-    LCD_SetWindows(left, top, right, bottom);
+    spiram->SPIRAM_setMode(STREAM_MODE);
+    LCD_setWindow(left, top, right, bottom);
     for (y = top; y < bottom; y++) {  // line
-        spiram->SPIRAM_RD_Stream((y * LCD_WIDTH + left) * 2, pagebuf, sizeof(pagebuf));
+        spiram->SPIRAM_readStream((y * LCD_WIDTH + left) * 2, pagebuf, sizeof(pagebuf));
 
         LCD_DC_1;
         LCD_CS_0;
         for (x = left; x < right; x++) {
-            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
-            LCD_SPI_Write_Byte((UBYTE) *pagebuf++);
+            LCD_SPI_writeByte((UBYTE) *pagebuf++);
+            LCD_SPI_writeByte((UBYTE) *pagebuf++);
         }
         LCD_CS_1;
     }
 }
 
-void LCD_Driver::LCD_DrawPoint(WORD x, WORD y, DOT_PIXEL px, UWORD color) {
+void LCD_Driver::LCD_drawPoint(WORD x, WORD y, DOT_PIXEL px, UWORD color) {
     WORD dx ,dy;
     for (dx = 0; dx < px; dx++) {
         for (dy = 0; dy < px; dy++) {
-            LCD_SetPoint(x + dx - px, y + dy - px, color);
+            LCD_setPoint(x + dx - px, y + dy - px, color);
         }
     }
 }
 
-void LCD_Driver::LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWORD color, WORD width, WORD style) {
+void LCD_Driver::LCD_drawLine(WORD left, WORD top, WORD right, WORD bottom, UWORD color, WORD width, WORD style) {
     WORD x, y, dx, dy, e, pcnt;
 
     if (left > right) {  // Swap left and right
@@ -368,10 +368,10 @@ void LCD_Driver::LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWOR
     for (;;) {
         // Draw dotted line, 2 point is really virtual
         if (style == LINE_STYLE.LINE_DOTTED) {
-            if (pcnt++ == 0) LCD_DrawPoint(x, y, width, color);
+            if (pcnt++ == 0) LCD_drawPoint(x, y, width, color);
             if (3 <= pcnt) pcnt = 0;
         } else {
-            LCD_DrawPoint(x, y, width, color);
+            LCD_drawPoint(x, y, width, color);
         }
         if (2 * e >= dy) {
             if (x >= right) break;
@@ -386,7 +386,7 @@ void LCD_Driver::LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWOR
     }
 }
 
-void LCD_Driver::LCD_DisChar(WORD x, WORD y, UBYTE ch, UWORD color) {
+void LCD_Driver::LCD_drawChar(WORD x, WORD y, UBYTE ch, UWORD color) {
     WORD fontline = 0, fontcolumn = 0;
     UBYTE *p;
     UBYTE d;
@@ -398,7 +398,7 @@ void LCD_Driver::LCD_DisChar(WORD x, WORD y, UBYTE ch, UWORD color) {
     for (fontline = 0; fontline < LCD_CHAR_HEIGHT; fontline++) {
         d = *p;
         for (fontcolumn = 0; fontcolumn < LCD_CHAR_WIDTH; fontcolumn++) {
-            if (d & 0x80) LCD_SetPoint(x + fontcolumn, y + fontline, color);
+            if (d & 0x80) LCD_setPoint(x + fontcolumn, y + fontline, color);
             if (fontcolumn % 8 == 7) {
                 d = *++p;
             } else {

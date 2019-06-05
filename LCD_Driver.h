@@ -63,34 +63,34 @@ enum DRAW_FILL {
 
 class LCD_Driver {
   private:
-    void LCD_SPI_Init(void);
-    void LCD_Reset(void);
-    void LCD_InitReg(void);
+    void LCD_SPI_initialize(void);
+    void LCD_reset(void);
+    void LCD_initializeRegister(void);
 
-    void LCD_WriteReg(UBYTE reg);
-    void LCD_WriteData_8Bit(UBYTE data);
-    void LCD_WriteData_Buf(UWORD data, WORD length);
+    void LCD_writeRegister(UBYTE reg);
+    void LCD_writeByte(UBYTE data);
+    void LCD_writeStream(UWORD data, WORD length);
 
-    void LCD_SetWindows(WORD left, WORD top, WORD right, WORD bottom);
-    void LCD_SetCursor(WORD X, WORD Y);
-    void LCD_SetColor(UWORD color, WORD x, WORD y);
+    void LCD_setWindow(WORD left, WORD top, WORD right, WORD bottom);
+    void LCD_setCursor(WORD X, WORD Y);
+    void LCD_setColor(UWORD color, WORD x, WORD y);
 
-    void LCD_SetPoint(WORD x, WORD y, UWORD color);
+    void LCD_setPoint(WORD x, WORD y, UWORD color);
 
   public:
-    void LCD_Init(void);
+    void LCD_initialize(void);
 
-    void LCD_SetBL(WORD level);
+    void LCD_backlightLevel(WORD level);
 
-    void LCD_Clear(UWORD color);
-    void LCD_ClearBuf(void);
+    void LCD_clear(UWORD color);
+    void LCD_clearBuffer(void);
 
-    void LCD_Display(void);
-    void LCD_DisplayWindows(WORD left, WORD top, WORD right, WORD bottom);
+    void LCD_display(void);
+    void LCD_displayWindow(WORD left, WORD top, WORD right, WORD bottom);
 
-    void LCD_DrawPoint(WORD x, WORD y, DOT_PIXEL px, UWORD color);
-    void LCD_DrawLine(WORD left, WORD top, WORD right, WORD bottom, UWORD color, WORD width, WORD style);
-    void LCD_DisChar(WORD x, WORD y, UBYTE ch, UWORD Color);
+    void LCD_drawPoint(WORD x, WORD y, DOT_PIXEL px, UWORD color);
+    void LCD_drawLine(WORD left, WORD top, WORD right, WORD bottom, UWORD color, WORD width, WORD style);
+    void LCD_drawChar(WORD x, WORD y, UBYTE ch, UWORD Color);
 };
 
 static const unsigned char Font_Table[] = {

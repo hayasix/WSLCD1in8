@@ -34,15 +34,15 @@
 
 class SPIRAM {
   public:
-    void SPIRAM_SPI_Init(void);
+    void SPIRAM_SPI_initialize(void);
 
-    void SPIRAM_Set_Mode(UBYTE mode);
+    void SPIRAM_setMode(UBYTE mode);
 
-    UBYTE SPIRAM_RD_Byte(UWORD addr);
-    void SPIRAM_WR_Byte(UWORD addr, const UBYTE data);
-    void SPIRAM_RD_Page(UWORD addr, UBYTE *pagebuf);
-    void SPIRAM_WR_Page(UWORD addr, UBYTE *pagebuf);
-    void SPIRAM_RD_Stream(UWORD addr, UBYTE *pagebuf, UWORD length);
-    void SPIRAM_WR_Stream(UWORD addr, UBYTE *pagebuf, UWORD length);
+    UBYTE SPIRAM_readByte(UWORD addr);
+    void SPIRAM_writeByte(UWORD addr, const UBYTE data);
+    void SPIRAM_readPage(UWORD addr, UBYTE *pagebuf);
+    void SPIRAM_writePage(UWORD addr, UBYTE *pagebuf);
+    void SPIRAM_readStream(UWORD addr, UBYTE *pagebuf, UWORD length);
+    void SPIRAM_writeStream(UWORD addr, UBYTE *pagebuf, UWORD length);
 };
 #endif

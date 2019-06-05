@@ -17,179 +17,99 @@ let FONT_FOREGROUND_COLOR = LCD_COLOR.BLACK
 //% weight=20 color=#436EEE icon="\uf108"
 namespace LCD1IN8 {
 
-    //% blockId=LCD_Init
+    //% blockId=LCD_inititialize
     //% blockGap=8
     //% block="LCD1IN8 initialize"
-    //% shim=LCD1IN8::LCD_Init
+    //% shim=LCD1IN8::LCD_initialize
     //% weight=200
-    export function LCD_Init(): void {
+    export function LCD_initialize(): void {
         return;
     }
 
-    //% blockId=LCD_Clear
+    //% blockId=LCD_display
     //% blockGap=8
-    //% block="Clear screen and cache"
-    //% shim=LCD1IN8::LCD_Clear
-    //% weight=195
-    export function LCD_Clear(): void {
-       return;
-    }
-
-    //% blockId=LCD_Filling
-    //% blockGap=8
-    //% block="Filling color %color"
-    //% shim=LCD1IN8::LCD_Filling
-    //% weight=194
-    export function LCD_Filling(color: number): void {
-       return;
-    }
-
-    //% blockId=LCD_Display
-    //% blockGap=8
-    //% block="Send display data"
-    //% shim=LCD1IN8::LCD_Display
+    //% block="send display data"
+    //% shim=LCD1IN8::LCD_display
     //% weight=190
-    export function LCD_Display(): void {
+    export function LCD_display(): void {
         return;
     }
 
-    //% blockId=LCD_DisplayWindows
+    //% blockId=LCD_clear
     //% blockGap=8
-    //% block="Show Windows display data |left %left|top %top|right %right|bottom %bottom "
-    //% shim=LCD1IN8::LCD_DisplayWindows
+    //% block="clear screen and cache"
+    //% shim=LCD1IN8::LCD_clear
+    //% weight=195
+    export function LCD_clear(): void {
+        return;
+    }
+
+    //% blockId=LCD_filling
+    //% blockGap=8
+    //% block="filling color %color"
+    //% shim=LCD1IN8::LCD_filling
+    //% weight=194
+    export function LCD_filling(color: number): void {
+        return;
+    }
+
+    //% blockId=LCD_putDisplayBuffer
+    //% blockGap=8
+    //% block="Send display buffer data"
+    //% shim=LCD1IN8::LCD_putDisplayBuffer
+    //% weight=190
+    export function LCD_putDisplayBuffer(): void {
+        return;
+    }
+
+    //% blockId=LCD_displayWindow
+    //% blockGap=8
+    //% block="show window display data |left %left|top %top|right %right|bottom %bottom "
+    //% shim=LCD1IN8::LCD_displayWindow
     //% left.min=1 left.max=160 top.min=1 top.max=128
     //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
     //% weight=189
-    export function LCD_DisplayWindows(
-            left: number,
-            top: number,
-            right: number,
-            bottom: number): void {
+    export function LCD_displayWindow(left: number, top: number, right: number, bottom: number): void {
         return;
     }
 
-    //% blockId=Get_Color
+    //% blockId=getColor
     //% blockGap=8
     //% block="%color"
     //% weight=185
-    export function Get_Color(color: LCD_COLOR): number{
+    export function getColor(color: LCD_COLOR): number {
         return color;
     }
 
-    //% blockId=LCD_SetBL
+    //% blockId=LCD_backlightLevel
     //% blockGap=8
-    //% block="Set back light level %level"
+    //% block="set backlight level %level"
     //% level.min=0 level.max=10
-    //% shim=LCD1IN8::LCD_SetBL
+    //% shim=LCD1IN8::LCD_backlightLevel
     //% weight=180
-    export function LCD_SetBL(level: number): void {
+    export function LCD_backlightLevel(level: number): void {
         return;
     }
 
-    //% blockId=DrawPoint
+    //% blockId=drawPoint
     //% blockGap=8
-    //% block="Draw Point|x %x|y %y|color %color|point-size %pix"
+    //% block="draw point|x %x|y %y|color %color|point-size %pix"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
-    //% shim=LCD1IN8::DrawPoint
+    //% shim=LCD1IN8::drawPoint
     //% weight=150
-    export function DrawPoint(x: number, y: number, color: number, pix: DOT_PIXEL): void {
+    export function drawPoint(x: number, y: number, color: number, pix: DOT_PIXEL): void {
         return;
     }
 
-    //% blockId=DrawLine
-    //% blockGap=8
-    //% block="Draw Line|left %left|top %top|right %right|bottom %bottom|color %color|line-width %width|line-style %style"
-    //% left.min=1 left.max=160 top.min=1 top.max=128
-    //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
-    //% color.min=0 color.max=65535
-    //% weight=140
-    export function DrawLine(
-            left: number,
-            top: number,
-            right: number,
-            bottom: number,
-            color: number,
-            width: DOT_PIXEL,
-            style: LINE_STYLE): void {
-        return;
-    }
-
-    //% blockId=LCD_Clear
-    //% blockGap=8
-    //% block="Clear screen and cache"
-    //% shim=LCD1IN8::LCD_Clear
-    //% weight=195
-    export function LCD_Clear(): void {
-        return;
-    }
-
-    //% blockId=LCD_Filling
-    //% blockGap=8
-    //% block="Filling color %color"
-    //% shim=LCD1IN8::LCD_Filling
-    //% weight=194
-    export function LCD_Filling(color: number): void {
-        return;
-    }
-
-    //% blockId=LCD_Display
-    //% blockGap=8
-    //% block="Send display data"
-    //% shim=LCD1IN8::LCD_Display
-    //% weight=190
-    export function LCD_Display(): void {
-        return;
-    }
-
-    //% blockId=LCD_DisplayWindows
-    //% blockGap=8
-    //% block="Show Windows display data |left %left|top %top|right %right|bottom %bottom "
-    //% shim=LCD1IN8::LCD_DisplayWindows
-    //% left.min=1 left.max=160 top.min=1 top.max=128
-    //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
-    //% weight=189
-    export function LCD_DisplayWindows(left: number, top: number, right: number, bottom: number): void {
-        return;
-    }
-
-    //% blockId=Get_Color
-    //% blockGap=8
-    //% block="%color"
-    //% weight=185
-    export function Get_Color(color: LCD_COLOR): number {
-        return color;
-    }
-
-    //% blockId=LCD_SetBL
-    //% blockGap=8
-    //% block="Set backlight level %level"
-    //% level.min=0 level.max=10
-    //% shim=LCD1IN8::LCD_SetBL
-    //% weight=180
-    export function LCD_SetBL(level: number): void {
-        return;
-    }
-
-    //% blockId=DrawPoint
-    //% blockGap=8
-    //% block="Draw Point|x %x|y %y|color %color|point-size %Dot"
-    //% x.min=1 x.max=160 y.min=1 y.max=128
-    //% color.min=0 color.max=65535
-    //% shim=LCD1IN8::DrawPoint
-    //% weight=150
-    export function DrawPoint(x: number, y: number, color: number, pix: DOT_PIXEL): void {
-        return;
-    }
-
-     //% blockId=DrawLine
+     //% blockId=drawLine
      //% blockGap=8
-     //% block="Draw Line|left %left|top %top|right %right|bottom %bottom|color %color|line-width %width|line-style %style"
+     //% block="draw line|left %left|top %top|right %right|bottom %bottom|color %color|line-width %width|line-style %style"
      //% left.min=1 left.max=160 top.min=1 top.max=128
      //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
      //% color.min=0 color.max=65535
      //% weight=140
-    export function DrawLine(
+    export function drawLine(
             left: number,
             top: number,
             right: number,
@@ -200,18 +120,18 @@ namespace LCD1IN8 {
         return;
     }
 
-    //% shim=LCD1IN8::DisChar
-    function DisChar(x: number, y: number, ch: string, color: number): void {
+    //% shim=LCD1IN8::drawChar
+    function drawChar(x: number, y: number, ch: string, color: number): void {
         return;
     }
 
-    //% blockId=DisString
+    //% blockId=drawString
     //% blockGap=8
-    //% block="Show String|x %x|y %y|char %ch|color %color"
+    //% block="draw string|x %x|y %y|char %ch|color %color"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
     //% weight=100
-    export function DisString(x: number, y: number, s: string, color: number): void {
+    export function drawString(x: number, y: number, s: string, color: number): void {
         let left = x;
         let top = y;
         let height = 8;
@@ -233,13 +153,13 @@ namespace LCD1IN8 {
         }
     }
 
-    //% blockId=DisNumber
+    //% blockId=drawNumber
     //% blockGap=8
-    //% block="Show number|x %x|y %y|number %num|color %color"
+    //% block="draw number|x %x|y %y|number %num|color %color"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
     //% weight=100
-    export function DisNumber(x: number, y: number, num: number, color: number): void {
+    export function drawNumber(x: number, y: number, num: number, color: number): void {
         DisString(x, y, num + "", color);
     }
 

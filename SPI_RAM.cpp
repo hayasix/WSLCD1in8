@@ -15,8 +15,8 @@
 
 // SPI
 SPI ram_spi(MOSI, MISO, SCK);
-#define SPIRAM_SPI_Write_Byte(value) ram_spi.write(value)
-#define SPIRAM_SPI_Read_Byte(value) ram_spi.write(value)
+#define SPIRAM_SPI_writeByte(value) ram_spi.write(value)
+#define SPIRAM_SPI_readByte(value) ram_spi.write(value)
 
 // SPIRAM
 DigitalOut SPIRAM_CS(MICROBIT_PIN_P2);
@@ -28,7 +28,7 @@ DigitalOut SPIRAM_CS(MICROBIT_PIN_P2);
 function:
     Initialization system
 *********************************************/
-void SPIRAM::SPIRAM_SPI_Init(void) {
+void SPIRAM::SPIRAM_SPI_initialize(void) {
     ram_spi.format(8, 0);
     ram_spi.frequency(9000000);
 }
@@ -38,11 +38,11 @@ void SPIRAM::SPIRAM_SPI_Init(void) {
 function:
         // Mode handling
 *******************************************************************************/
-void SPIRAM::SPIRAM_Set_Mode(UBYTE mode) {
+void SPIRAM::SPIRAM_setMode(UBYTE mode) {
     SPIRAM_CS_0;
 
-    SPIRAM_SPI_Write_Byte(CMD_WRSR);
-    SPIRAM_SPI_Write_Byte(mode);
+    SPIRAM_SPI_writeByte(CMD_WRSR);
+    SPIRAM_SPI_writeByte(mode);
 
     SPIRAM_CS_1;
 }
@@ -51,33 +51,33 @@ void SPIRAM::SPIRAM_Set_Mode(UBYTE mode) {
 function:
         // Write and read byte
 *******************************************************************************/
-UBYTE SPIRAM::SPIRAM_RD_Byte(UWORD addr) {
-    BYTE RD_Byte;
+UBYTE SPIRAM::SPIRAM_readByte(UWORD addr) {
+    BYTE data;
 
     SPIRAM_CS_0;
-    SPIRAM_SPI_Write_Byte(CMD_READ);
+    SPIRAM_SPI_writeByte(CMD_READ);
 
-    SPIRAM_SPI_Write_Byte(0x00);
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr >> 8));
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr & 0xff));
+    SPIRAM_SPI_writeByte(0x00);
+    SPIRAM_SPI_writeByte((UBYTE) (addr >> 8));
+    SPIRAM_SPI_writeByte((UBYTE) (addr & 0xff));
 
-    RD_Byte = SPIRAM_SPI_Read_Byte(0x00);
+    data = SPIRAM_SPI_readByte(0x00);
     SPIRAM_CS_1;
 
-    return RD_Byte;
+    return data;
 }
 
-void SPIRAM::SPIRAM_WR_Byte(UWORD addr, const UBYTE data) {
+void SPIRAM::SPIRAM_writeByte(UWORD addr, const UBYTE data) {
     // Write Addr,data
     SPIRAM_CS_0;
 
-    SPIRAM_SPI_Write_Byte(CMD_WRITE);
+    SPIRAM_SPI_writeByte(CMD_WRITE);
 
-    SPIRAM_SPI_Write_Byte(0x00);
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr >> 8));
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr & 0xff));
+    SPIRAM_SPI_writeByte(0x00);
+    SPIRAM_SPI_writeByte((UBYTE) (addr >> 8));
+    SPIRAM_SPI_writeByte((UBYTE) (addr & 0xff));
 
-    SPIRAM_SPI_Write_Byte(data);
+    SPIRAM_SPI_writeByte(data);
     SPIRAM_CS_1;
 }
 
@@ -87,37 +87,37 @@ function:
         // Page transfer functions. Bound to current page. Passing the boundary
         //  will wrap to the beginning
 *******************************************************************************/
-void SPIRAM::SPIRAM_RD_Page(UWORD addr, UBYTE *pagebuf) {
+void SPIRAM::SPIRAM_readPage(UWORD addr, UBYTE *pagebuf) {
     WORD i;
 
     // Write Addr, read data
     SPIRAM_CS_0;
-    SPIRAM_SPI_Write_Byte(CMD_READ);
+    SPIRAM_SPI_writeByte(CMD_READ);
 
-    SPIRAM_SPI_Write_Byte(0x00);
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr >> 8));
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr & 0xff));
+    SPIRAM_SPI_writeByte(0x00);
+    SPIRAM_SPI_writeByte((UBYTE) (addr >> 8));
+    SPIRAM_SPI_writeByte((UBYTE) (addr & 0xff));
 
     for (i = 0; i < 32; i++) {
-        *pagebuf = SPIRAM_SPI_Read_Byte(0x00);
+        *pagebuf = SPIRAM_SPI_readByte(0x00);
         pagebuf++;
     }
     SPIRAM_CS_1;
 }
 
-void SPIRAM::SPIRAM_WR_Page(UWORD addr, UBYTE *pagebuf) {
+void SPIRAM::SPIRAM_writePage(UWORD addr, UBYTE *pagebuf) {
     WORD i;
 
     // Write Addr, read data
     SPIRAM_CS_0;
-    SPIRAM_SPI_Write_Byte(CMD_WRITE);
+    SPIRAM_SPI_writeByte(CMD_WRITE);
 
-    SPIRAM_SPI_Write_Byte(0x00);
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr >> 8));
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr & 0xff));
+    SPIRAM_SPI_writeByte(0x00);
+    SPIRAM_SPI_writeByte((UBYTE) (addr >> 8));
+    SPIRAM_SPI_writeByte((UBYTE) (addr & 0xff));
 
     for (i = 0; i < 32; i++) {
-        SPIRAM_SPI_Write_Byte(*pagebuf);
+        SPIRAM_SPI_writeByte(*pagebuf);
         pagebuf++;
     }
     SPIRAM_CS_1;
@@ -127,37 +127,37 @@ void SPIRAM::SPIRAM_WR_Page(UWORD addr, UBYTE *pagebuf) {
 function:
         // Write and read Len
 *******************************************************************************/
-void SPIRAM::SPIRAM_RD_Stream(UWORD addr, UBYTE *pagebuf, UWORD length) {
+void SPIRAM::SPIRAM_readStream(UWORD addr, UBYTE *pagebuf, UWORD length) {
     WORD i;
 
     // Write Addr, read data
     SPIRAM_CS_0;
-    SPIRAM_SPI_Write_Byte(CMD_READ);
+    SPIRAM_SPI_writeByte(CMD_READ);
 
-    SPIRAM_SPI_Write_Byte(0x00);
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr >> 8));
-    SPIRAM_SPI_Write_Byte((UBYTE) (addr & 0xff));
+    SPIRAM_SPI_writeByte(0x00);
+    SPIRAM_SPI_writeByte((UBYTE) (addr >> 8));
+    SPIRAM_SPI_writeByte((UBYTE) (addr & 0xff));
 
     for (i = 0; i < length; i++) {
-        *pagebuf = SPIRAM_SPI_Read_Byte(0x00);
+        *pagebuf = SPIRAM_SPI_readByte(0x00);
         pagebuf++;
     }
     SPIRAM_CS_1;
 }
 
-void SPIRAM::SPIRAM_WR_Stream(UWORD addr, UBYTE *pagebuf, UWORD length) {
+void SPIRAM::SPIRAM_writeStream(UWORD addr, UBYTE *pagebuf, UWORD length) {
     WORD i;
 
     // Write Addr, read data
     SPIRAM_CS_0;
-    SPIRAM_SPI_Write_Byte(CMD_WRITE);
+    SPIRAM_SPI_writeByte(CMD_WRITE);
 
-    SPIRAM_SPI_Write_Byte(0x00);
-    SPIRAM_SPI_Write_Byte((BYTE) (addr >> 8));
-    SPIRAM_SPI_Write_Byte((BYTE) (addr & 0xff));
+    SPIRAM_SPI_writeByte(0x00);
+    SPIRAM_SPI_writeByte((BYTE) (addr >> 8));
+    SPIRAM_SPI_writeByte((BYTE) (addr & 0xff));
 
     for (i = 0; i < length; i++) {
-        SPIRAM_SPI_Write_Byte(*pagebuf);
+        SPIRAM_SPI_writeByte(*pagebuf);
         pagebuf++;
     }
     SPIRAM_CS_1;

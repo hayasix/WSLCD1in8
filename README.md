@@ -23,41 +23,41 @@ Or contact us
 You need to initial LCD module first.
 
 block: LCD1IN8 Init.
-javascript: LCD_Init()
+javascript: LCD_initialize()
 
 2.Clear the screen:
 Clear the screen to white. Create an buffer on RAM with the resolution size 160*128 and initial it to white.
 
 block: Clear Clear screen and cache.
-javascript: LCD_Init()
+javascript: LCD_initialize()
 
 3.Set the backlight:
 
 block: Set back light level.
-javascript: LCD_SetBL()
+javascript: LCD_backlightLevel()
 
 4.Send display data:
 With this block, it will send one frame of buffer to the LCD and display. 
 Note: it is always following drawing operation.
 
 block: Send display data.
-javascript: LCD_Display()
+javascript: LCD_display()
 
 5.Send widows display data:
 Sometimes it is not necessary to refresh the entire screen data, 
 only need to display part of the window data.
 
 block: Send widows display data.
-javascript: LCD_DisplayWindows()
+javascript: LCD_displayWindow()
 
 6.Clear screen and cache:
 
 block: Clear screen and cache.
-javascript: LCD_Clear()
+javascript: LCD_clear()
 
 7.Fill the full screen color:
 block: Filling Color.
-javascript: LCD_Filling()
+javascript: LCD_filling()
 
 8.Draw point:
 Place the block before send display data. 
@@ -68,33 +68,33 @@ the one is use the color block as above,
 another is to set the value (RGB565) by drag the slider.
 
 block: Draw Point.
-javascript: DrawPoint()
+javascript: drawPoint()
 
 9.Draw line:
 You can choose the the line's position, color, size and its sytle.
 
 block: Draw Line.
-javascript: DrawLine()
+javascript: drawLine()
 
 10.Draw rectange:
 
 block: Draw Rectange.
-javascript: DrawRectangle()
+javascript: drawRectangle()
 
 11.Draw Circle:
 
 block: Draw Circle.
-javascript: DrawCirclee()
+javascript: drawCircle()
 
 12.Show String:
 
 block: Show String.
-javascript: DisString()
+javascript: drawString()
 
 13.Show number:
 
 block: Show number.
-javascript: DisNumber()
+javascript: drawNumber()
 
 #More parameters can be found in test.ts for a detailed understanding.
 

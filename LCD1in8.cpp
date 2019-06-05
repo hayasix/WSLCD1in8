@@ -19,48 +19,48 @@ namespace LCD1IN8 {
     LCD_Driver *LCD;
 
     // %
-    void LCD_Init() {
-        LCD->LCD_Init();
+    void LCD_initialize() {
+        LCD->LCD_initialize();
     }
 
     // %
-    void LCD_Clear() {
-        LCD->LCD_Clear(WHITE);
-  LCD->LCD_ClearBuf();
+    void LCD_clear() {
+        LCD->LCD_clear(WHITE);
+        LCD->LCD_clearBuffer();
     }
 
     // %
-    void LCD_Filling(int Color) {
-        LCD->LCD_Clear(Color);
+    void LCD_filling(int color) {
+        LCD->LCD_clear(color);
     }
 
     // %
-    void LCD_Display() {
-        LCD->LCD_Display();
+    void LCD_display() {
+        LCD->LCD_display();
     }
 
     // %
-    void LCD_DisplayWindows(int left, int top, int right, int bottom) {
-        LCD->LCD_DisplayWindows(left, top, right, bottom);
+    void LCD_displayWindow(int left, int top, int right, int bottom) {
+        LCD->LCD_displayWindow(left, top, right, bottom);
     }
 
     // %
-    void LCD_SetBL(int level) {
-        LCD->LCD_SetBL(level);
+    void LCD_backlightLevel(int level) {
+        LCD->LCD_backlightLevel(level);
     }
 
     // %
-    void DrawPoint(int x, int y, int color, DOT_PIXEL pix) {
-        LCD->LCD_DrawPoint(x, y, pix, color);
+    void drawPoint(int x, int y, int color, DOT_PIXEL pix) {
+        LCD->LCD_drawPoint(x, y, pix, color);
     }
 
     // %
-    void DrawLine(int left, int top, int right, int bottom, int color, DOT_PIXEL pix) {
-        LCD->LCD_DrawPoint(left, top, right, bottom, color, 1, pix);
+    void drawLine(int left, int top, int right, int bottom, int color, DOT_PIXEL pix) {
+        LCD->LCD_drawLine(left, top, right, bottom, color, 1, pix);
     }
 
     // %
-    void DisChar(int x, int y, int ch, int color) {
-        LCD->LCD_DisChar(x, y, ch, color);
+    void drawChar(int x, int y, int ch, int color) {
+        LCD->LCD_drawChar(x, y, ch, color);
     }
 }
