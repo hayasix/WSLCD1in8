@@ -191,10 +191,10 @@ void LCD_Driver::LCD_InitReg() {
 /********************************************************************************
 function:   Sets the start position and size of the display area
 parameter:
-    Xstart  :   X direction Start coordinates
-    Ystart  :   Y direction Start coordinates
-    Xend    :   X direction end coordinates
-    Yend    :   Y direction end coordinates
+    left    :   X direction Start coordinates
+    top     :   Y direction Start coordinates
+    right   :   X direction end coordinates
+    bottom  :   Y direction end coordinates
 ********************************************************************************/
 void LCD_Driver::LCD_SetWindows(WORD left, WORD top, WORD right, WORD bottom) {
     // set the X coordinates
@@ -216,7 +216,7 @@ void LCD_Driver::LCD_SetWindows(WORD left, WORD top, WORD right, WORD bottom) {
 
 /********************************************************************************
 function:
-    Set the display point (Xpoint, Ypoint)
+    Set the display point (x, y)
 ********************************************************************************/
 void LCD_Driver::LCD_SetCursor(WORD x, WORD y) {
     if (0 <= x && x < LCD_WIDTH && 0 <= y && y < LCD_HEIGHT) {

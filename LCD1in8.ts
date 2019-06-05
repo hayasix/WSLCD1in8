@@ -194,7 +194,7 @@ namespace LCD1IN8 {
             top: number,
             right: number,
             bottom: number,
-            Color: number,
+            color: number,
             width: DOT_PIXEL,
             style: LINE_STYLE): void {
         return;
@@ -221,7 +221,7 @@ namespace LCD1IN8 {
                 x = left;
                 y += height;
             }
-            // If the Y direction is full, reposition to(Xstart, Ystart)
+            // If the Y direction is full, reposition to(x, y)
             if(y  + height > 128) {
                 x = left;
                 y = top;
