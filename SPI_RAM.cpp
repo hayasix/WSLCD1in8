@@ -52,7 +52,7 @@ function:
         // Write and read byte
 *******************************************************************************/
 UBYTE SPIRAM::SPIRAM_readByte(UWORD addr) {
-    BYTE data;
+    UBYTE data;
 
     SPIRAM_CS_0;
     SPIRAM_SPI_writeByte(CMD_READ);
@@ -153,8 +153,8 @@ void SPIRAM::SPIRAM_writeStream(UWORD addr, UBYTE *pagebuf, UWORD length) {
     SPIRAM_SPI_writeByte(CMD_WRITE);
 
     SPIRAM_SPI_writeByte(0x00);
-    SPIRAM_SPI_writeByte((BYTE) (addr >> 8));
-    SPIRAM_SPI_writeByte((BYTE) (addr & 0xff));
+    SPIRAM_SPI_writeByte((UBYTE) (addr >> 8));
+    SPIRAM_SPI_writeByte((UBYTE) (addr & 0xff));
 
     for (i = 0; i < length; i++) {
         SPIRAM_SPI_writeByte(*pagebuf);

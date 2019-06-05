@@ -118,7 +118,7 @@ namespace LCD1IN8 {
 
     //% blockId=drawString
     //% blockGap=8
-    //% block="draw string|x %x|y %y|char %ch|color %color"
+    //% block="draw string|x %x|y %y|string %ch|color %color"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
     //% weight=100
@@ -133,7 +133,7 @@ namespace LCD1IN8 {
                 y += height;
             }
             // If the Y direction is full, reposition to(x, y)
-            if(y  + height > 128) {
+            if (y + height > 128) {
                 x = left;
                 y = top;
             }
