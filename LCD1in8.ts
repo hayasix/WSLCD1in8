@@ -19,7 +19,7 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_Init
     //% blockGap=8
-    //% block="LCD1IN8 Init"
+    //% block="LCD1IN8 initialize"
     //% shim=LCD1IN8::LCD_Init
     //% weight=200
     export function LCD_Init(): void {
@@ -37,7 +37,7 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_Filling
     //% blockGap=8
-    //% block="Filling Color %color"
+    //% block="Filling color %color"
     //% shim=LCD1IN8::LCD_Filling
     //% weight=194
     export function LCD_Filling(color: number): void {
@@ -55,7 +55,7 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_DisplayWindows
     //% blockGap=8
-    //% block="Show Windows display data |Xstart %left|Ystart %top|Xend %right|Yend %bottom "
+    //% block="Show Windows display data |left %left|top %top|right %right|bottom %bottom "
     //% shim=LCD1IN8::LCD_DisplayWindows
     //% left.min=1 left.max=160 top.min=1 top.max=128
     //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
@@ -88,7 +88,7 @@ namespace LCD1IN8 {
 
     //% blockId=DrawPoint
     //% blockGap=8
-    //% block="Draw Point|x %x|y %y|Color %color|Point Size %pix"
+    //% block="Draw Point|x %x|y %y|color %color|point-size %pix"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
     //% shim=LCD1IN8::DrawPoint
@@ -99,7 +99,7 @@ namespace LCD1IN8 {
 
     //% blockId=DrawLine
     //% blockGap=8
-    //% block="Draw Line|Xstart %left|Ystart %top|Xend %right|Yend %bottom|Color %color|Line width %width|Line Style %style"
+    //% block="Draw Line|left %left|top %top|right %right|bottom %bottom|color %color|line-width %width|line-style %style"
     //% left.min=1 left.max=160 top.min=1 top.max=128
     //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
     //% color.min=0 color.max=65535
@@ -126,7 +126,7 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_Filling
     //% blockGap=8
-    //% block="Filling Color %color"
+    //% block="Filling color %color"
     //% shim=LCD1IN8::LCD_Filling
     //% weight=194
     export function LCD_Filling(color: number): void {
@@ -144,7 +144,7 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_DisplayWindows
     //% blockGap=8
-    //% block="Show Windows display data |Xstart %left|Ystart %top|Xend %right|Yend %bottom "
+    //% block="Show Windows display data |left %left|top %top|right %right|bottom %bottom "
     //% shim=LCD1IN8::LCD_DisplayWindows
     //% left.min=1 left.max=160 top.min=1 top.max=128
     //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
@@ -163,7 +163,7 @@ namespace LCD1IN8 {
 
     //% blockId=LCD_SetBL
     //% blockGap=8
-    //% block="Set back light level %level"
+    //% block="Set backlight level %level"
     //% level.min=0 level.max=10
     //% shim=LCD1IN8::LCD_SetBL
     //% weight=180
@@ -173,7 +173,7 @@ namespace LCD1IN8 {
 
     //% blockId=DrawPoint
     //% blockGap=8
-    //% block="Draw Point|x %x|y %y|Color %Color|Point Size %Dot"
+    //% block="Draw Point|x %x|y %y|color %color|point-size %Dot"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
     //% shim=LCD1IN8::DrawPoint
@@ -184,7 +184,7 @@ namespace LCD1IN8 {
 
      //% blockId=DrawLine
      //% blockGap=8
-     //% block="Draw Line|Xstart %left|Ystart %top|Xend %right|Yend %bottom|Color %color|Line width %width|Line Style %style"
+     //% block="Draw Line|left %left|top %top|right %right|bottom %bottom|color %color|line-width %width|line-style %style"
      //% left.min=1 left.max=160 top.min=1 top.max=128
      //% right.min=1 right.max=160 bottom.min=1 bottom.max=128
      //% color.min=0 color.max=65535
@@ -207,7 +207,7 @@ namespace LCD1IN8 {
 
     //% blockId=DisString
     //% blockGap=8
-    //% block="Show String|X %x|Y %y|char %ch|Color %color"
+    //% block="Show String|x %x|y %y|char %ch|color %color"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
     //% weight=100
@@ -235,7 +235,7 @@ namespace LCD1IN8 {
 
     //% blockId=DisNumber
     //% blockGap=8
-    //% block="Show number|X %x|Y %y|number %num|Color %color"
+    //% block="Show number|x %x|y %y|number %num|color %color"
     //% x.min=1 x.max=160 y.min=1 y.max=128
     //% color.min=0 color.max=65535
     //% weight=100
