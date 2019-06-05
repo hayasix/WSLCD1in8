@@ -146,7 +146,7 @@ namespace LCD1IN8 {
                 x = left;
                 y = top;
             }
-            DisChar(x, y, s.charCodeAt(i), color);
+            drawChar(x, y, s.charCodeAt(i), color);
 
             // The next word of the abscissa increases the font of the broadband
             x += width;
@@ -160,7 +160,7 @@ namespace LCD1IN8 {
     //% color.min=0 color.max=65535
     //% weight=100
     export function drawNumber(x: number, y: number, num: number, color: number): void {
-        DisString(x, y, num + "", color);
+        drawString(x, y, num + "", color);
     }
 
 }  // namespace LCD1IN8
